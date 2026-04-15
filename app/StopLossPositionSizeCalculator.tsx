@@ -35,8 +35,8 @@ function fmt(n: unknown, digits = 2): string {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   }).format(value);
-}).format(n);
 }
+
 
 function clampFloorByStep(value: number, step: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
@@ -50,7 +50,6 @@ function meterWidth(value: unknown, max: unknown): string {
 
   if (!Number.isFinite(v) || !Number.isFinite(m) || m <= 0) return "0%";
   return `${Math.max(0, Math.min((v / m) * 100, 100))}%`;
-}%`;
 }
 
 export default function StopLossPositionSizeCalculator() {
