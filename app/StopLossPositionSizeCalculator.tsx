@@ -37,7 +37,6 @@ function fmt(n: unknown, digits = 2): string {
   }).format(value);
 }
 
-
 function clampFloorByStep(value: number, step: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
   if (!Number.isFinite(step) || step <= 0) return Math.floor(value);
@@ -127,9 +126,10 @@ export default function StopLossPositionSizeCalculator() {
       if (isCreditSpread) {
         maxProfitPerContract = Math.max(entryPremium, 0) * multiplier;
       } else {
-        maxProfitPerContract = Number.isFinite(spreadWidthValue) && Number.isFinite(entryPremium)
-          ? Math.max(spreadWidthValue - entryPremium, 0) * multiplier
-          : null;
+        maxProfitPerContract =
+          Number.isFinite(spreadWidthValue) && Number.isFinite(entryPremium)
+            ? Math.max(spreadWidthValue - entryPremium, 0) * multiplier
+            : null;
       }
 
       if (Number.isFinite(entryPremium) && chosenPremiumRisk > 0) {
@@ -282,7 +282,8 @@ export default function StopLossPositionSizeCalculator() {
       ? "Premium Cost"
       : "Position Value";
   const riskPerUnitLabel = isSpread ? "Risk / Spread" : isOption ? "Risk / Contract" : "Risk / Share";
-  const stopOrExitValue = isSpread && maxLossMethod === "stop" ? values.plannedExit : isSpread ? values.netEntry : values.stop;
+  const stopOrExitValue =
+    isSpread && maxLossMethod === "stop" ? values.plannedExit : isSpread ? values.netEntry : values.stop;
   const stopOrExitSubLabel = isSpread
     ? maxLossMethod === "stop"
       ? "Planned exit premium"
