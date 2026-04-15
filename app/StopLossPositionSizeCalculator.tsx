@@ -27,12 +27,15 @@ type StopMode = "price" | "percent";
 type MaxLossMethod = "defined" | "stop";
 type RiskMode = "absolute" | "percent";
 
-function fmt(n: number | null | undefined, digits = 2): string {
-  if (!Number.isFinite(n)) return "—";
+function fmt(n: unknown, digits = 2): string {
+  const value = typeof n === "number" ? n : Number(n);
+  if (!Number.isFinite(value)) return "—";
+
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
-  }).format(n);
+  }).format(value);
+}).format(n);
 }
 
 function clampFloorByStep(value: number, step: number): number {
@@ -41,9 +44,13 @@ function clampFloorByStep(value: number, step: number): number {
   return Math.floor(value / step) * step;
 }
 
-function meterWidth(value: number | null | undefined, max: number | null | undefined): string {
-  if (!Number.isFinite(value) || !Number.isFinite(max) || max <= 0) return "0%";
-  return `${Math.max(0, Math.min((value / max) * 100, 100))}%`;
+function meterWidth(value: unknown, max: unknown): string {
+  const v = typeof value === "number" ? value : Number(value);
+  const m = typeof max === "number" ? max : Number(max);
+
+  if (!Number.isFinite(v) || !Number.isFinite(m) || m <= 0) return "0%";
+  return `${Math.max(0, Math.min((v / m) * 100, 100))}%`;
+}%`;
 }
 
 export default function StopLossPositionSizeCalculator() {
